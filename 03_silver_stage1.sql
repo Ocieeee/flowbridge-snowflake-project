@@ -1,5 +1,4 @@
 
-
 set env = 'DEV';;
 set DB =  'FLOWBRIDGE_'||$env||'_DB';
 
@@ -265,7 +264,7 @@ BEGIN
                 OR S.RAW_DATA:warehouse.inventory_level::NUMBER >= 0
             )
     ) AS SRC
-    ON TGT.ORDER_ID = SRC.ORDER_ID   -- assumed: this part wasn't in your screenshots
+    ON TGT.ORDER_ID = SRC.ORDER_ID   
     WHEN MATCHED THEN UPDATE SET
         TGT.ORDER_STATUS       = SRC.ORDER_STATUS,
         TGT.CARRIER            = SRC.CARRIER,
@@ -320,19 +319,19 @@ as
 
 alter task silver_schema.bronze_to_silver_task resume;
 
-show tasks;
+show tasks silver_schema.bronze_to_silver_task;
 
 
-CALL FLOWBRIDGE_DEV_DB.SILVER_SCHEMA.SP_BRONZE_TO_SILVER();
+-- CALL FLOWBRIDGE_DEV_DB.SILVER_SCHEMA.SP_BRONZE_TO_SILVER();
 
-SELECT SYSTEM$STREAM_HAS_DATA('SILVER_SCHEMA.RAW_ORDERS_STREAM');
-
-
-select count(*) as stg_count from silver_schema.stg_orders
-union all
-select count(*) as stg_count from silver_schema.dead_letter;
+-- SELECT SYSTEM$STREAM_HAS_DATA('SILVER_SCHEMA.RAW_ORDERS_STREAM');
 
 
-select * from silver_schema.dead_letter;
+-- select count(*) as stg_count from silver_schema.stg_orders
+-- union all
+-- select count(*) as stg_count from silver_schema.dead_letter;
 
-select * from silver_schema.stg_orders
+
+-- select * from silver_schema.dead_letter;
+
+-- select * from silver_schema.stg_orders
