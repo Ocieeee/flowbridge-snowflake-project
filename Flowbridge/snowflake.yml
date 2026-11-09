@@ -1,0 +1,34 @@
+definition_version: 2
+entities:
+  streamlit_app:
+    type: streamlit
+    meta:
+      use_mixins:
+        - streamlit_shared
+    identifier:
+      name: V168V_QW4YP06PAO
+      database: FLOWBRIDGE_PROD_DB
+      schema: SERVING_SCHEMA
+    title: Flowbridgesupply
+    grants:
+      - privilege: USAGE
+        role: ACCOUNTADMIN
+        with_grant_option: true
+  Target 1:
+    type: streamlit
+    meta:
+      use_mixins:
+        - streamlit_shared
+      role: ACCOUNTADMIN
+    identifier:
+      name: ''
+    title: Flowbridge
+mixins:
+  streamlit_shared:
+    artifacts:
+      - pyproject.toml
+      - streamlit_app.py
+      - .streamlit/config.toml
+    query_warehouse: FLOWBRIDGE_ANALYTICS_WH
+    compute_pool: SYSTEM_COMPUTE_POOL_CPU
+    main_file: streamlit_app.py
